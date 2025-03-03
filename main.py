@@ -20,7 +20,7 @@ def calculate_angle(a, b, c):
     return angle
 
 def main():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('/Users/hudsonch/Downloads/SwimExample.mp4')  # Change to video file path or 0 for webcam
     
     with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
         while cap.isOpened():
@@ -32,7 +32,7 @@ def main():
             height, width, _ = frame.shape  # Get frame dimensions
             
             # Flip the frame horizontally to match the mirrored webcam display
-            frame = cv2.flip(frame, 1)
+            # frame = cv2.flip(frame, 1)  # Remove mirroring for video
             
             # Convert image to RGB
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -74,7 +74,7 @@ def main():
                     
                     # Display swapped joint name and angle above the joint_b location
                     swapped_name = "RIGHT" if "LEFT" in joint_b.name else "LEFT"
-                    joint_label = joint_b.name.replace("LEFT", "TEMP").replace("RIGHT", "LEFT").replace("TEMP", "RIGHT")
+                    joint_label = joint_b.name
                     
                     cv2.putText(image, f'{joint_label}: {int(angle)}°',
                                 (text_x, text_y),
